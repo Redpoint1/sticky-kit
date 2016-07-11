@@ -14,6 +14,7 @@ $.fn.stick_in_parent = (opts={}) ->
     offset_top
     spacer: manual_spacer
     bottoming: enable_bottoming
+    height_from
   } = opts
 
   offset_top ?= 0
@@ -89,11 +90,14 @@ $.fn.stick_in_parent = (opts={}) ->
 
         top = elm.offset().top - (parseInt(elm.css("margin-top"), 10) or 0) - offset_top
 
-        height = elm.outerHeight true
+        unless height_from?
+          height = elm.outerHeight true
+        else
+          height = height_from.outerHeight true
 
         el_float = elm.css "float"
         spacer.css({
-          width: outer_width elm
+          width: unless manual_spacer? then elm.outerWidth true else ""
           height: height
           display: elm.css "display"
           "vertical-align": elm.css "vertical-align"
@@ -139,7 +143,6 @@ $.fn.stick_in_parent = (opts={}) ->
             if bottomed && !will_bottom
               bottomed = false
               elm.css({
-                position: "fixed"
                 bottom: ""
                 top: offset
               }).trigger("sticky_kit:unbottom")
@@ -181,7 +184,6 @@ $.fn.stick_in_parent = (opts={}) ->
           if scroll > top
             fixed = true
             css = {
-              position: "fixed"
               top: offset
             }
 
