@@ -1,5 +1,5 @@
 ###*
-@license Sticky-kit v1.1.4 | MIT | Leaf Corcoran 2015 | http://leafo.net
+@license Sticky-kit v1.1.5 | MIT | Leaf Corcoran 2015 | http://leafo.net
 ###
 
 $ = @jQuery or window.jQuery
@@ -91,9 +91,9 @@ $.fn.stick_in_parent = (opts={}) ->
         top = elm.offset().top - (parseInt(elm.css("margin-top"), 10) or 0) - offset_top
 
         unless height_from?
-          height = elm.outerHeight true
+          height = elm.prop "scrollHeight"
         else
-          height = height_from.outerHeight true
+          height = height_from.prop "scrollHeight"
 
         el_float = elm.css "float"
         spacer.css({
